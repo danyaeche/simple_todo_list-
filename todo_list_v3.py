@@ -1,6 +1,6 @@
 class Todo_list_v3(object):
   def __init__(self):
-    self.items_list = []
+    self.items = []
 
   '''
   def __str__(self):
@@ -13,40 +13,40 @@ class Todo_list_v3(object):
   '''
   def add_item(self, item):
     if type(item) != str:
-      return TypeError
-    elif item in self.items_list:
-      pass
+      raise TypeError("item must be a string" )
+    elif item in self.items:
+      raise ValueError("item must be unique in the list")
     else:
-      self.items_list.append(item)
+      self.items.append(item)
 
   '''
   Method to delte an item in a list check if value is in the
   list first
   '''
   def delete_item(self, item):
-    try:
-      self.items_list.remove(item)
-    except ValueError: 
-      return ValueError
+    if item in self.items:
+      self.items.remove(item)
+    else:
+      raise ValueError("Item has to be in the list")
 
   '''
   Method to edit preexisting items in the list
   '''
   def edit_item(self, item, new_item):
-    x = -1
-    for i in range(self.items_list):
-      if self.items_list[i] == item:
-        x = i
-    if x == -1:
-      raise ValueError
+    item_index = -1
+    for index in range(len(self.items)):
+      if self.items[index] == item:
+        item_index = index
+    if item_index == -1:
+      raise ValueError("item is not in the list")
     else:
-      self.items_list[x] = new_item
+      self.items[item_index] = new_item
 
   '''
   Method to return the length of the list 
   '''
   def get_length(self):
-    return (len(self.items_dict))
+    return len(self.items)
 
   '''
   Method to add multiple items in the list
@@ -65,6 +65,6 @@ class Todo_list_v3(object):
   '''
   Method to sort item in the list lexigraphically in the list 
   '''
-  def sort_items(self, bool_flag):
-    sorted_item_list = sorted(self.items_list)
-    return sorted_item_list 
+  def sort_items(self):
+    sorted_item_list = sorted(self.items)
+    self.items = sorted_item_list
